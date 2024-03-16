@@ -1,0 +1,28 @@
+ 
+# Environment variables
+.env
+.env.local
+
+# Node modules
+node_modules/
+
+# Logs and runtime data
+logs/
+*.log
+npm-debug.log*
+
+# Build artifacts
+dist/
+build/
+*.exe
+*.msi
+*.jar
+
+# User-specific files
+.vscode/
+.idea/
+
+# Dependency lock files
+package-lock.json
+practise.js
+yarn.lock
