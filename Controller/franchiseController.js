@@ -123,7 +123,11 @@ const deleteFranchise = async (req, res) => {
 
     // Delete the image file from the folder
     if (imageUrl) {
-      const imagePath = path.join(__dirname, "../public/FranchiseImages", imageUrl);
+      const imagePath = path.join(
+        __dirname,
+        "../public/FranchiseImages",
+        imageUrl
+      );
       fs.unlinkSync(imagePath);
     }
 

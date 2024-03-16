@@ -6,6 +6,7 @@ const jwt = require("jsonwebtoken");
 
 const createAdminProfile = async (req, res) => {
   try {
+    console.log("start");
     // Create a new admin profile instance
     const adminProfile = new Admin({
       fname: req.body.fname,
@@ -18,6 +19,7 @@ const createAdminProfile = async (req, res) => {
     });
 
     // Save the new admin profile to the database
+    console.log("middle");
     const admin = await adminProfile.save();
 
     // Respond with a success message and the created admin profile
