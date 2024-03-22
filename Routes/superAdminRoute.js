@@ -7,7 +7,7 @@ const adminController = require("../Constant/superAdminController");
 const multer = require("multer");
 
 // Multer configuration for file uploads
-// Storing the image with franchise ID as part of the filename
+
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "public/SuperAdminProfileImg/");
@@ -39,17 +39,17 @@ const upload = multer({
 });
 
 router.post("/signIn", adminController.signIn);
-router.get("/getAdminData", adminController.getAdminProfile);
+//router.get("/getAdminData", adminController.getAdminProfile);
+
 router.post(
   "/createAdminProfile",
-  upload.single("image"),
+  upload.single("adminImg"),
   adminController.createAdminProfile
 );
 
-router.put(
-  "/updateAdminProfile/:id",
-  upload.single("image"),
-  adminController.updateAdminProfile
-);
+router.post("/updateAdminProfile", (req, res) => {
+  console.log(req.body);
+  console.log(req.file);
+});
 
 module.exports = router;

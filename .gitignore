@@ -1,6 +1,7 @@
  
 # Environment variables
- 
+.env
+.env.local
 
 # Node modules
 node_modules/
@@ -22,6 +23,6 @@ build/
 .idea/
 
 # Dependency lock files
-
+package-lock.json
 practise.js
 yarn.lock

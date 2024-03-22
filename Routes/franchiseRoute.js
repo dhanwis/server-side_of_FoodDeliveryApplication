@@ -52,6 +52,7 @@ router.post(
   upload.single("image"),
   franchiseController.createFranchise
 );
+
 router.get("/:id", franchiseController.getFranchiseById);
 router.put("/:id", upload.single("image"), franchiseController.updateFranchise);
 
