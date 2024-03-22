@@ -3,6 +3,8 @@ const bcrypt = require("bcrypt");
 const fs = require("fs");
 const path = require("node:path");
 
+
+
 // Handler function to get all franchises
 const getAllFranchises = async (req, res) => {
   const directoryPath = path.join(__dirname, "../public/FranchiseImages");
