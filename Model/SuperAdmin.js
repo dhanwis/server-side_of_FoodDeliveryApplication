@@ -9,9 +9,10 @@ const mongoose = require("mongoose");
 const adminSchema = new mongoose.Schema({
   fname: { type: String, required: false },
   lname: { type: String, required: false },
+  //password: { type: String },
+  //emailID: { type: String },
   adminImg: { type: String, required: false },
   adminPhoneNumber: { type: String, required: false },
-  //emailID: { type: String, required: true, unique: true },
 });
 
 module.exports = mongoose.model("Admin", adminSchema);

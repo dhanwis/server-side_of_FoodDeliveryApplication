@@ -25,8 +25,8 @@ app.use(
 app.use(express.static("public"));
 //app.use("/Images", express.static(path.join(__dirname, "./public/Images")));
 
-app.use(franchiseRouter);
-app.use(superAdminRouter);
+app.use("/franchise", franchiseRouter);
+app.use("/admin", superAdminRouter);
 
 //Mongoose Setup
 const PORT = process.env.PORT || 6000;

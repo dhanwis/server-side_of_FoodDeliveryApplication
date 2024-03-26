@@ -5,13 +5,13 @@ const path = require("node:path");
 
 // Handler function to get all franchises
 const getAllFranchises = async (req, res) => {
-  const directoryPath = path.join(__dirname, "../public/FranchiseImages");
+  //const directoryPath = path.join(__dirname, "../public/FranchiseImages");
 
   try {
     //const franchises = await Franchise.find().select("-password"); to avoid the password if needed;
 
     const franchises = await Franchise.find();
-    const imageFiles = fs.readdirSync(directoryPath);
+    //const imageFiles = fs.readdirSync(directoryPath);
     // const franchiseData = franchises.map((franchise, index) => {
     //   const imageUrl = imageFiles[index] ? `${imageFiles[index]}` : null;
     //   return {
@@ -50,9 +50,7 @@ const createFranchise = async (req, res) => {
 };
 
 // Handler function to get a franchise by ID
-const getFranchiseById = async (req, res) => {
-  // Implementation to get a franchise by ID
-};
+const getFranchiseById = async (req, res) => {};
 
 // Handler function to update a franchise
 const updateFranchise = async (req, res) => {
