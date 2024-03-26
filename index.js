@@ -3,6 +3,9 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const franchiseRouter = require("./Routes/franchiseRoute");
 const superAdminRouter = require("./Routes/superAdminRoute");
+const deliveryboyrouter=require('./Routes/deliveryBoyRoute')
+const restaurantrouter=require('./Routes/restaurantRoute')
+
 const helmet = require("helmet");
 const dotenv = require("dotenv");
 const { default: mongoose } = require("mongoose");
@@ -23,21 +26,33 @@ app.use(
 
 // using Routes
 app.use(express.static("public"));
-//app.use("/Images", express.static(path.join(__dirname, "./public/Images")));
+app.use("/Images", express.static(path.join(__dirname, "./public/Images")));
+app.use("/proimage", express.static(path.join(__dirname, "./public/proimage")));
+
 
 app.use("/franchise", franchiseRouter);
 app.use("/admin", superAdminRouter);
 
+app.use(deliveryboyrouter)
+app.use(restaurantrouter)
+
+// app.use('/uploads',express.static('./uploads'))
+
+
+
+
 //Mongoose Setup
 const PORT = process.env.PORT || 6000;
 
-mongoose
-  .connect(process.env.MONGO_URL, {
-    dbName: "FoodDeliveryApp",
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => {
-    app.listen(PORT, () => console.log(`Server running on PORT ${PORT}`));
-  })
-  .catch((error) => console.log(`${error} did not connect`));
+mongoose.connect(process.env.MONGO_URL, {
+  dbName: "FoodDeliveryApp",
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
+.then(() => {
+  console.log('Connected to MongoDB');
+  app.listen(PORT, () => console.log(`Server running on PORT ${PORT}`));
+})
+.catch((error) => {
+  console.error('Error connecting to MongoDB:', error);
+});
