@@ -1,5 +1,4 @@
 const express = require("express");
-const session = require("express-session");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const franchiseRouter = require("./Routes/franchiseRoute");
@@ -43,10 +42,10 @@ app.use(
 );
 
 // Middleware for session management (super admin)
-app.use("/admin", session(superAdminSessionConfig));
+//app.use("/admin", session(superAdminSessionConfig));
 
 // Middleware for session management (franchise)
-app.use("/franchise", session(franchiseSessionConfig));
+//app.use("/franchise", session(franchiseSessionConfig));
 
 // using Routes
 app.use(express.static("public"));

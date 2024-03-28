@@ -80,7 +80,6 @@ exports.getallRestaurant = async (req, res) => {
 };
 
 // edit restaurant
-<<<<<<< HEAD
 exports.editRestaurant=async(req,res)=>{
     const {id}=req.params
     // const userid=req.payload
@@ -118,33 +117,27 @@ catch(err){
 }
 
 } 
-=======
-exports.editRestaurant = async (req, res) => {
-  const { id } = req.params;
-  // const userid=req.payload
->>>>>>> b4b72fa257aea2b3c4c6df062134610775d32663
 
-  const { resname, reslocation, resaddress, resphone, restime, resimage } =
-    req.body;
-  const uploadedrestaurantimage = req.file ? req.file.filename : resimage;
+  // const { resname, reslocation, resaddress, resphone, restime, resimage } =
+  //   req.body;
+  // const uploadedrestaurantimage = req.file ? req.file.filename : resimage;
 
-  try {
-    const updateRestaurant = await Restaurant.findByIdAndUpdate(
-      { _id: id },
-      {
-        resname,
-        reslocation,
-        resaddress,
-        resphone,
-        restime,
-        resimage: uploadedrestaurantimage,
-      },
-      { new: true }
-    );
+  // try {
+  //   const updateRestaurant = await Restaurant.findByIdAndUpdate(
+  //     { _id: id },
+  //     {
+  //       resname,
+  //       reslocation,
+  //       resaddress,
+  //       resphone,
+  //       restime,
+  //       resimage: uploadedrestaurantimage,
+  //     },
+  //     { new: true }
+  //   );
 
-    await updateRestaurant.save();
-    res.status(200).json(updateRestaurant);
-  } catch (err) {
-    res.status(401).json(err);
-  }
-};
+  //   await updateRestaurant.save();
+  //   res.status(200).json(updateRestaurant);
+  // } catch (err) {
+  //   res.status(401).json(err);
+  // }

@@ -60,13 +60,9 @@ router.put(
   restaurantcontroller.editRestaurant
 );
 
-<<<<<<< HEAD
 
 // delete restaurant
 router.delete('/restaurants/remove/:id',restaurantcontroller.deleterestaurant)
 
 
 module.exports=router
-=======
-module.exports = router;
->>>>>>> b4b72fa257aea2b3c4c6df062134610775d32663
