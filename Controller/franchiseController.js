@@ -1,9 +1,10 @@
 const Franchise = require("../Model/Franchise");
+
 const bcrypt = require("bcrypt");
 const fs = require("fs");
+const generateAccessToken = require("../Middlewares/generateAccessToken");
 const path = require("node:path");
-
-
+const FranchiseSession = require("../Model/SessionModel/FranchiseSessionSchema");
 
 // Handler function to get all franchises
 const getAllFranchises = async (req, res) => {
@@ -50,9 +51,6 @@ const createFranchise = async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 };
-
-// Handler function to get a franchise by ID
-const getFranchiseById = async (req, res) => {};
 
 // Handler function to update a franchise
 const updateFranchise = async (req, res) => {
@@ -200,6 +198,105 @@ const unblockFranchise = async (req, res) => {
   }
 };
 
+// Login Endpoint
+const loginFranchise = async (req, res) => {
+  try {
+    const { franchiseName, password } = req.body;
+    // Find the franchise by name
+    const franchise = await Franchise.findOne({ name: franchiseName });
+    // Check if franchise exists and password is correct
+    if (!franchise || !bcrypt.compareSync(password, franchise.password)) {
+      console.log("franchise is not match");
+      return res.status(401).json({ message: "Invalid credentials" });
+    }
+
+    const existingSession = await FranchiseSession.findOne({
+      userId: franchise._id,
+    });
+
+    if (existingSession) {
+      console.log("Franchise is already  used");
+      // Franchise is already logged in on another device
+      return res
+        .status(401)
+        .json({ message: "Franchise is already logged In" });
+    }
+
+    // Generate access token
+    const accessToken = generateAccessToken(franchise);
+
+    // Store session identifier in the database
+    await FranchiseSession.create({
+      userId: franchise._id,
+      accessToken: accessToken,
+    });
+
+    const userData = {
+      _id: franchise._id,
+      name: franchise.name,
+      imageUrl: franchise.imageUrl,
+      phoneNumber: franchise.phoneNumber,
+      location: franchise.location,
+      status: franchise.status,
+      createdAt: franchise.createdAt,
+    };
+
+    // Send token as response
+    res.status(200).json({
+      token: accessToken,
+      franchiseData: userData,
+    });
+  } catch (error) {
+    console.error("Error logging in franchise:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+// Logout function for franchise users
+const logoutFranchise = async (req, res) => {
+  const { userId } = req.body;
+  try {
+    // Find the session associated with the franchise user
+    const session = await FranchiseSession.findOneAndDelete({
+      userId: userId,
+    });
+    console.log(session);
+    if (!session) {
+      // If no session found, return an error response
+      return { success: false, message: "Session not found" };
+    }
+
+    // Respond with success message
+    res
+      .status(200)
+      .json({ success: true, message: "Franchise logged out successfully" });
+  } catch (error) {
+    console.error("Error logging out franchise:", error);
+    //return { success: false, message: "Internal server error" };
+    res.status(401).json({ success: false, message: "Internal server error" });
+  }
+};
+
+const getFranchiseById = async (req, res) => {
+  try {
+    const franchise = await Franchise.findOne({ _id: req.params.id });
+
+    const userData = {
+      _id: franchise._id,
+      name: franchise.name,
+      imageUrl: franchise.imageUrl,
+      phoneNumber: franchise.phoneNumber,
+      location: franchise.location,
+      status: franchise.status,
+      createdAt: franchise.createdAt,
+    };
+
+    res.status(200).json(userData);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 module.exports = {
   getAllFranchises,
   createFranchise,
@@ -208,4 +305,6 @@ module.exports = {
   deleteFranchise,
   blockFranchise,
   unblockFranchise,
+  loginFranchise,
+  logoutFranchise,
 };
