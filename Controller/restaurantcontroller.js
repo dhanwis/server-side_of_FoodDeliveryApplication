@@ -68,6 +68,24 @@ exports.editRestaurant=async(req,res)=>{
 
 }
 
+// delete restaurant
+
+exports.deleterestaurant=async(req,res)=>{
+    const {id}=req.params
+    console.log(id);
+
+
+try{
+    const removerestaurant=await restaurantss.findByIdAndDelete({_id:id})
+    res.status(200).json(removerestaurant)
+
+}
+catch(err){
+    res.status(401).json(err)
+
+}
+
+} 
 
 
 

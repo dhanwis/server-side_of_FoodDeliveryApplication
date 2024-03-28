@@ -5,7 +5,8 @@ const DeliveryBoySchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
   boylocation: { type: String, required: true },
   boynumber: { type: String, required: true },
-  // status: { type: String, required: true }
+  devimage:{type:String},
+   status: { type: String }
 
 });
 

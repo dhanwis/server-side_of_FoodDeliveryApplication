@@ -64,5 +64,8 @@ router.get('/restaurants/getrestaurant',restaurantcontroller.getallRestaurant)
 router.put('/restaurants/update/:id',upload.single('resimage'),restaurantcontroller.editRestaurant)
 
 
+// delete restaurant
+router.delete('/restaurants/remove/:id',restaurantcontroller.deleterestaurant)
+
 
 module.exports=router
