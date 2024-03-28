@@ -1,11 +1,10 @@
 const express = require("express");
 
-
 const restaurantcontroller = require("../Controller/restaurantcontroller");
 
 const path = require("node:path");
 // const multerconfig = require('../Middlewares/multerMiddleware')
-const router=new express.Router()
+const router = new express.Router();
 
 const multer = require("multer");
 
@@ -23,13 +22,7 @@ const storage = multer.diskStorage({
 });
 
 const fileFilterConfig = function (req, file, cb) {
-  // if (file.mimetype === "image/jpeg" || file.mimetype === "image/png") {
-  //   cb(null, true);
-  // } else {
-  //   cb(null, false);
-  // }
-  const filetypes = /jpeg|jpg|png|gif|tiff|bmp|svg|webp|heif|psd|ai|eps/
-  ;
+  const filetypes = /jpeg|jpg|png|gif|tiff|bmp|svg|webp|heif|psd|ai|eps/;
   const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
   const mimetype = filetypes.test(file.mimetype);
 
@@ -47,25 +40,33 @@ const upload = multer({
   fileFilter: fileFilterConfig,
 });
 
-
-
 // add restaurant
 router.post(
-  "/restaurants/addrestaurant",
+  "/restaurants/addrestaurant/:id",
   upload.single("resimage"),
   restaurantcontroller.addRestaurant
 );
 
-
 // get restaurant
-router.get('/restaurants/getrestaurant',restaurantcontroller.getallRestaurant)
+router.get(
+  "/restaurants/getrestaurant/:id",
+  restaurantcontroller.getallRestaurant
+);
 
 // edit restaurant
-router.put('/restaurants/update/:id',upload.single('resimage'),restaurantcontroller.editRestaurant)
+router.put(
+  "/restaurants/update/:id",
+  upload.single("resimage"),
+  restaurantcontroller.editRestaurant
+);
 
+<<<<<<< HEAD
 
 // delete restaurant
 router.delete('/restaurants/remove/:id',restaurantcontroller.deleterestaurant)
 
 
 module.exports=router
+=======
+module.exports = router;
+>>>>>>> b4b72fa257aea2b3c4c6df062134610775d32663

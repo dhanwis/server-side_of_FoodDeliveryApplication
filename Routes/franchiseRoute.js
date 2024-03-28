@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const franchiseController = require("../Controller/franchiseController");
 const path = require("node:path");
+const authenticateFranchise = require("../Middlewares/authenticationMiddlewares/authenticateFranchise");
 
 // Image Uploader setup;
 const multer = require("multer");
@@ -43,23 +44,29 @@ const upload = multer({
   fileFilter: fileFilterConfig,
 });
 
-// Define routes for franchise resource
-//router.use("/uploads", express.static(path.join(__dirname, "uploads")));
-
+//getting all franchise data
 router.get("/allFranchiseData", franchiseController.getAllFranchises);
+//creating new franchise
 router.post(
   "/addFranchise",
   upload.single("image"),
   franchiseController.createFranchise
 );
 
-router.get("/:id", franchiseController.getFranchiseById);
+//franchise by ID
+router.get("/franchiseDataBy/:id", franchiseController.getFranchiseById);
+//franchise update
 router.put("/:id", upload.single("image"), franchiseController.updateFranchise);
 
 //block && unblock
 router.put("/block-franchise/:id", franchiseController.blockFranchise);
 router.put("/unblock-franchise/:id", franchiseController.unblockFranchise);
 
+//delete franchise By ID
 router.delete("/:id", franchiseController.deleteFranchise);
+
+//login & logout
+router.post("/auth/login", franchiseController.loginFranchise);
+router.post("/auth/logout", franchiseController.logoutFranchise);
 
 module.exports = router;

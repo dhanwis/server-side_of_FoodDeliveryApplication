@@ -39,17 +39,13 @@ const upload = multer({
 });
 
 router.post("/signIn", adminController.signIn);
-//router.get("/getAdminData", adminController.getAdminProfile);
+
+router.get("/getAdminProfile", adminController.getAdminProfile);
 
 router.post(
-  "/createAdminProfile",
+  "/create_or_updateAdminProfile",
   upload.single("adminImg"),
-  adminController.createAdminProfile
+  adminController.create_or_updateAdminProfile
 );
-
-router.post("/updateAdminProfile", (req, res) => {
-  console.log(req.body);
-  console.log(req.file);
-});
 
 module.exports = router;
